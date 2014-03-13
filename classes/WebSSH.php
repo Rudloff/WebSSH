@@ -81,7 +81,7 @@ class WebSSH
         )) {
             $_SESSION["host"]=$this->host;
             if (empty($_SESSION["shell"])) {
-                $_SESSION["shell"]=self::displayLine();
+                $_SESSION["shell"]='';
             }
             return true;
         } else {

@@ -10,34 +10,35 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
  * @link     https://code.google.com/p/php-ssh-tools/
  */
-require_once "classes/dom-enhancer/XMLDocument.php";
 require_once "classes/WebSSH.php";
 session_start();
-$doc=new DOMenhancer_XMLDocument("WebSSH".(isset($_SESSION["host"])?" - ".$_SESSION["host"]:""), true);
-$dom=$doc->DOM;
+?>
+<script src="scroll.js"></script>
+<?php
 if (isset($_POST["host"]) || isset($_SESSION["host"])) {
-    $dom->head->addElement("script", null, array("src"=>"scroll.js"));
     $host=isset($_POST["host"])?$_POST["host"]:$_SESSION["host"];
     $ssh=new WebSSH($host);
     if ($ssh->auth() && isset($_POST["cmd"])) {
         $ssh->exec($_POST["cmd"]);
-       
     }
-    $dom->body->addElement("div", null, array("id"=>"shell", "class"=>"shell"))->addElement("pre", $_SESSION["shell"]);
-    $dom->body->addForm(
-        "index.php", array(
-            array("type"=>"text", "id"=>"cmd", "name"=>"cmd", "focus"=>true),
-        ), "POST", false
-    );
+    ?>
+    <div id="shell" class="sell">
+    <pre><?php echo $_SESSION["shell"]; ?></pre>
+    </div>
+    <form method="post" action="index.php">
+        <label for="host">Command:</label>
+        <input type="text" id="cmd" name="cmd" focus />
+        <input type="submit" />
+    </form>
+    <?php
     
 } else {
-    $dom->body->addForm(
-        "index.php",
-        array(
-            "label"=>_("Host:"), "type"=>"text", "id"=>"host", "name"=>"host", "focus"=>true
-        ),
-        "POST"
-    );
+    ?>
+    <form method="post" action="index.php">
+        <label for="host">Host:</label>
+        <input type="text" id="host" name="host" focus />
+        <input type="submit" />
+    </form>
+    <?php
 }
-$doc->display();
 ?>
