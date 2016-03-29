@@ -1,0 +1,12 @@
+{
+	"name": "rudloff/web-ssh",
+	"description": "PHP SSH client",
+	"license": "GPL-3.0",
+	"authors": [{
+		"name": "Pierre Rudloff",
+		"email": "contact@rudloff.pro"
+	}],
+	"require": {
+		"ext-ssh2": "^0.12"
+	}
+}
